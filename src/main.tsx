@@ -7,6 +7,8 @@ import Dashboard from "./components/Dashboard";
 import Landing from "./Pages/Landing";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
+import ExperimentPage from "./Pages/ExperimentPage";
+import Experiments  from "./Pages/Experiments";
 import "./index.css";
 
 createRoot(document.getElementById("root")!).render(
@@ -18,6 +20,11 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/editor" element={<App />} />
+
+        <Route path="/experiment/:id" element={<ExperimentPage />} />
+         <Route path="/experiments" element={<Experiments />} />
+         <Route path="/experiment/:id" element={<ExperimentPage />} />
+
       </Routes>
     </BrowserRouter>
   </StrictMode>
