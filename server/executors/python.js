@@ -1,8 +1,8 @@
 const { spawn } = require('child_process');
 
-const EXECUTION_TIMEOUT_MS = 10000;   // 10 seconds
-const MEMORY_LIMIT_MB = '256m';
-const CPU_LIMIT = '0.5';
+const EXECUTION_TIMEOUT_MS = 30000;   // 10 seconds
+const MEMORY_LIMIT_MB = '512m';
+const CPU_LIMIT = '1';
 
 function executePython(code, input = '') {
   return new Promise((resolve, reject) => {
