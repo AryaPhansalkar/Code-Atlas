@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import App from "./App";
+import Compiler from "./Pages/Compiler";
 import Dashboard from "./components/Dashboard";
 import Landing from "./Pages/Landing";
 import Login from "./Pages/Login";
@@ -19,7 +20,7 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/editor" element={<App />} />
+        <Route path="/compiler" element={<Compiler/>} />
 
         <Route path="/experiment/:id" element={<ExperimentPage />} />
          <Route path="/experiments" element={<Experiments />} />
