@@ -91,7 +91,7 @@ This will install all frontend dependencies defined in `package.json`.
 Start the local development environment:
 
 ```bash
-npm run dev
+npm run dev:all
 ```
 
 The application will start in development mode and can be accessed via the local server URL shown in the terminal (commonly `http://localhost:5173` for Vite-based React apps).
