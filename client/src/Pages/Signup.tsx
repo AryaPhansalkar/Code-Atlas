@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 interface SignupForm {
@@ -9,38 +9,23 @@ interface SignupForm {
 }
 
 export default function Signup() {
-  const [formData, setFormData] = useState<SignupForm>({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<SignupForm>();
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const onSubmit = (data: SignupForm) => {
+    console.log("Signup Data:", data);
   };
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match");
-      return;
-    }
-
-    console.log("Signup Data:", formData);
-  };
+  const password = watch("password");
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white px-4">
-      
-      {/* Card */}
       <div className="w-full max-w-md border border-gray-200 rounded-2xl shadow-md p-8">
         
-        {/* Heading */}
         <h2 className="text-3xl font-bold text-center text-indigo-700 mb-2">
           Create Account
         </h2>
@@ -48,8 +33,7 @@ export default function Signup() {
           Join us and get started
         </p>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           
           {/* Name */}
           <div>
@@ -58,13 +42,11 @@ export default function Signup() {
             </label>
             <input
               type="text"
-              name="name"
               placeholder="Enter your name"
-              value={formData.name}
-              onChange={handleChange}
+              {...register("name", { required: "Name is required" })}
               className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-700"
-              required
             />
+            {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
           </div>
 
           {/* Email */}
@@ -74,13 +56,11 @@ export default function Signup() {
             </label>
             <input
               type="email"
-              name="email"
               placeholder="Enter your email"
-              value={formData.email}
-              onChange={handleChange}
+              {...register("email", { required: "Email is required" })}
               className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-700"
-              required
             />
+            {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
           </div>
 
           {/* Password */}
@@ -90,13 +70,11 @@ export default function Signup() {
             </label>
             <input
               type="password"
-              name="password"
               placeholder="Create password"
-              value={formData.password}
-              onChange={handleChange}
+              {...register("password", { required: "Password is required" })}
               className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-700"
-              required
             />
+            {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
           </div>
 
           {/* Confirm Password */}
@@ -106,13 +84,19 @@ export default function Signup() {
             </label>
             <input
               type="password"
-              name="confirmPassword"
               placeholder="Confirm password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
+              {...register("confirmPassword", {
+                required: "Confirm your password",
+                validate: (value) =>
+                  value === password || "Passwords do not match",
+              })}
               className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-700"
-              required
             />
+            {errors.confirmPassword && (
+              <p className="text-red-500 text-sm">
+                {errors.confirmPassword.message}
+              </p>
+            )}
           </div>
 
           {/* Button */}
@@ -124,7 +108,6 @@ export default function Signup() {
           </button>
         </form>
 
-        {/* Login link */}
         <p className="text-center text-sm text-gray-600 mt-6">
           Already have an account?{" "}
           <Link
